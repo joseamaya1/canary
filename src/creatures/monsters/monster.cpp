@@ -45,6 +45,8 @@ Monster::Monster(const std::shared_ptr<MonsterType> mType) :
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
 	targetDistance = mType->info.targetDistance;
+	minLevel = mType->info.minLevel;
+	maxLevel = mType->info.maxLevel;
 	if (level > 0) {
 		float bonusHp = g_configManager().getFloat(MLVL_BONUSHP, __FUNCTION__) * level;
 		if (bonusHp != 0.0) {

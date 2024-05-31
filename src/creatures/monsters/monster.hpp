@@ -126,6 +126,13 @@ public:
 	uint32_t getManaCost() const {
 		return mType->info.manaCost;
 	}
+	uint32_t getMinLevel() const {
+		return mType->info.minLevel;
+	}
+	uint32_t getMaxLevel() const {
+		return mType->info.maxLevel;
+	}
+
 	RespawnType getRespawnType() const {
 		return mType->info.respawnType;
 	}
@@ -387,6 +394,9 @@ private:
 	int32_t challengeFocusDuration = 0;
 	int32_t stepDuration = 0;
 	int32_t targetDistance = 1;
+	int32_t minLevel = 0;
+	int32_t maxLevel = 0;
+
 	int32_t challengeMeleeDuration = 0;
 	uint16_t totalPlayersOnScreen = 0;
 	int32_t runAwayHealth = 0;
