@@ -1240,6 +1240,38 @@ int MonsterTypeFunctions::luaMonsterTypeManaCost(lua_State* L) {
 	return 1;
 }
 
+int MonsterTypeFunctions::luaMonsterTypeMinLevel(lua_State* L) {
+	// get: monsterType:minLevel() set: monsterType:manaCost(mana)
+	const auto monsterType = getUserdataShared<MonsterType>(L, 1);
+	if (monsterType) {
+		if (lua_gettop(L) == 1) {
+			lua_pushnumber(L, monsterType->info.minLevel);
+		} else {
+			monsterType->info.minLevel = getNumber<uint32_t>(L, 2);
+			pushBoolean(L, true);
+		}
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int MonsterTypeFunctions::luaMonsterTypeMaxLevel(lua_State* L) {
+	// get: monsterType:maxLevel() set: monsterType:manaCost(mana)
+	const auto monsterType = getUserdataShared<MonsterType>(L, 1);
+	if (monsterType) {
+		if (lua_gettop(L) == 1) {
+			lua_pushnumber(L, monsterType->info.maxLevel);
+		} else {
+			monsterType->info.maxLevel = getNumber<uint32_t>(L, 2);
+			pushBoolean(L, true);
+		}
+	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
 int MonsterTypeFunctions::luaMonsterTypeBaseSpeed(lua_State* L) {
 	// monsterType:baseSpeed()
 	const auto monsterType = getUserdataShared<MonsterType>(L, 1);

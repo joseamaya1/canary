@@ -109,6 +109,8 @@ public:
 		registerMethod(L, "MonsterType", "race", MonsterTypeFunctions::luaMonsterTypeRace);
 		registerMethod(L, "MonsterType", "corpseId", MonsterTypeFunctions::luaMonsterTypeCorpseId);
 		registerMethod(L, "MonsterType", "manaCost", MonsterTypeFunctions::luaMonsterTypeManaCost);
+		registerMethod(L, "MonsterType", "manaCost", MonsterTypeFunctions::luaMonsterTypeMinLevel);
+		registerMethod(L, "MonsterType", "manaCost", MonsterTypeFunctions::luaMonsterTypeMaxLevel);
 		registerMethod(L, "MonsterType", "baseSpeed", MonsterTypeFunctions::luaMonsterTypeBaseSpeed);
 		registerMethod(L, "MonsterType", "light", MonsterTypeFunctions::luaMonsterTypeLight);
 
@@ -232,6 +234,8 @@ private:
 	static int luaMonsterTypeRace(lua_State* L);
 	static int luaMonsterTypeCorpseId(lua_State* L);
 	static int luaMonsterTypeManaCost(lua_State* L);
+	static int luaMonsterTypeMinLevel(lua_State* L);
+	static int luaMonsterTypeMaxLevel(lua_State* L);
 	static int luaMonsterTypeBaseSpeed(lua_State* L);
 	static int luaMonsterTypeLight(lua_State* L);
 

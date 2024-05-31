@@ -394,8 +394,6 @@ private:
 	int32_t challengeFocusDuration = 0;
 	int32_t stepDuration = 0;
 	int32_t targetDistance = 1;
-	int32_t minLevel = 0;
-	int32_t maxLevel = 0;
 
 	int32_t challengeMeleeDuration = 0;
 	uint16_t totalPlayersOnScreen = 0;
