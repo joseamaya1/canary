@@ -55,7 +55,7 @@ public:
 		return mType->nameDescription;
 	}
 	std::string getDescription(int32_t) override {
-		return strDescription + '.';
+		return strDescription + ", it is level " + std::to_string(level) + '.';
 	}
 
 	CreatureType_t getType() const override {
@@ -137,6 +137,11 @@ public:
 	uint32_t getHealingCombatValue(CombatType_t healingType) const;
 
 	bool canWalkOnFieldType(CombatType_t combatType) const;
+	
+	int32_t getLevel() const {
+			return level;
+		}
+
 	void onAttackedCreatureDisappear(bool isLogout) override;
 
 	void onCreatureAppear(std::shared_ptr<Creature> creature, bool isLogin) override;

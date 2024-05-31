@@ -23,6 +23,19 @@ ConfigManager &ConfigManager::getInstance() {
 	return inject<ConfigManager>();
 }
 
+float getGlobalFloat(lua_State* L, const char* identifier, const float defaultValue = 0.0f)
+{
+	lua_getglobal(L, identifier);
+	if (!lua_isnumber(L, -1)) {
+		lua_pop(L, 1);
+		return defaultValue;
+	}
+
+	float val = lua_tonumber(L, -1);
+	lua_pop(L, 1);
+	return val;
+}
+
 bool ConfigManager::load() {
 	lua_State* L = luaL_newstate();
 	if (!L) {
@@ -185,6 +198,9 @@ bool ConfigManager::load() {
 	loadFloatConfig(L, RATE_BOSS_ATTACK, "rateBossAttack", 1.0);
 	loadFloatConfig(L, RATE_BOSS_DEFENSE, "rateBossDefense", 1.0);
 	loadFloatConfig(L, RATE_BOSS_HEALTH, "rateBossHealth", 1.0);
+	loadFloatConfig(L, MLVL_BONUSDMG, "monsterBonusDamage", 0.0);
+	loadFloatConfig(L, MLVL_BONUSSPEED, "monsterBonusSpeed", 0.0);
+	loadFloatConfig(L, MLVL_BONUSHP, "monsterBonusHealth", 0.0);
 	loadFloatConfig(L, RATE_EXERCISE_TRAINING_SPEED, "rateExerciseTrainingSpeed", 1.0);
 	loadFloatConfig(L, RATE_HEALTH_REGEN_SPEED, "rateHealthRegenSpeed", 1.0);
 	loadFloatConfig(L, RATE_HEALTH_REGEN, "rateHealthRegen", 1.0);
@@ -425,6 +441,16 @@ float ConfigManager::loadFloatConfig(lua_State* L, const ConfigKey_t &key, const
 	lua_pop(L, 1);
 	return value;
 }
+
+float ConfigManager::getFloat(floating_config_t what) const
+{
+	if (what >= LAST_FLOATING_CONFIG) {
+		std::cout << "[Warning - ConfigManager::getFloat] Accessing invalid index: " << what << std::endl;
+		return 0.0f;
+	}
+	return floating[what];
+}
+
 
 const std::string &ConfigManager::getString(const ConfigKey_t &key, std::string_view context) const {
 	static const std::string dummyStr;

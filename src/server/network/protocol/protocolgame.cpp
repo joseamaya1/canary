@@ -40,6 +40,7 @@
 #include "enums/account_type.hpp"
 #include "enums/account_group_type.hpp"
 #include "enums/account_coins.hpp"
+#include "creatures/creatures/monsters/monster.hpp"
 
 #include "creatures/players/highscore_category.hpp"
 
@@ -3204,7 +3205,13 @@ void ProtocolGame::sendCreatureOutfit(std::shared_ptr<Creature> creature, const 
 
 	NetworkMessage msg;
 	msg.addByte(0x8E);
-	msg.add<uint32_t>(creature->getID());
+	const Monster* monster = creature->getMonster();
+		if (monster && monster->getLevel() > 0) {
+			msg.addString(creature->getName() + " [" + std::to_string(monster->getLevel()) + "]");
+		}
+		else {
+			msg.addString(creature->getName());
+		}
 	AddOutfit(msg, outfit);
 	if (!oldProtocol && outfit.lookMount != 0) {
 		msg.addByte(outfit.lookMountHead);

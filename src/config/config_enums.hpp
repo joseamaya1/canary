@@ -330,3 +330,11 @@ enum ConfigKey_t : uint16_t {
 	WORLD_TYPE,
 	XP_DISPLAY_MODE
 };
+
+enum floating_config_t {
+	MLVL_BONUSDMG,
+	MLVL_BONUSSPEED,
+	MLVL_BONUSHP,
+
+	AST_FLOATING_CONFIG
+};

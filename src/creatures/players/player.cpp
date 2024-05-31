@@ -2365,6 +2365,16 @@ void Player::addExperience(std::shared_ptr<Creature> target, uint64_t exp, bool 
 
 	g_callbacks().executeCallback(EventCallback_t::playerOnGainExperience, &EventCallback::playerOnGainExperience, getPlayer(), target, exp, rawExp);
 
+		//g_events->eventPlayerOnGainExperience(this, source, exp, rawExp);
+	//if (exp == 0) {
+	//	return;
+	//}
+
+	const Monster* monster = source->getMonster();
+	if (monster && monster->getLevel() > 0) {
+		exp += (exp * 0.08) * monster->getLevel();
+	}
+
 	g_events().eventPlayerOnGainExperience(static_self_cast<Player>(), target, exp, rawExp);
 	if (exp == 0) {
 		return;

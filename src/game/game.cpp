@@ -7027,6 +7027,15 @@ bool Game::combatChangeHealth(std::shared_ptr<Creature> attacker, std::shared_pt
 		// Wheel of destiny apply combat effects
 		applyWheelOfDestinyEffectsToDamage(damage, attackerPlayer, target);
 
+		Monster* monster = attacker ? attacker->getMonster() : nullptr;
+		if (monster && monster->getLevel() > 0) {
+			float bonusDmg = g_config.getFloat(ConfigManager::MLVL_BONUSDMG) * monster->getLevel();
+			if (bonusDmg != 0.0) {
+				damage.primary.value += std::round(damage.primary.value * bonusDmg);
+				damage.secondary.value += std::round(damage.secondary.value * bonusDmg);
+			}
+		}
+
 		damage.primary.value = std::abs(damage.primary.value);
 		damage.secondary.value = std::abs(damage.secondary.value);
 
@@ -7325,6 +7334,8 @@ bool Game::combatChangeHealth(std::shared_ptr<Creature> attacker, std::shared_pt
 	return true;
 }
 
+
+
 void Game::updatePlayerPartyHuntAnalyzer(const CombatDamage &damage, std::shared_ptr<Player> player) const {
 	if (!player) {
 		return;
@@ -7587,6 +7598,20 @@ int32_t Game::calculateLeechAmount(const int32_t &realDamage, const uint16_t &sk
 
 bool Game::combatChangeMana(std::shared_ptr<Creature> attacker, std::shared_ptr<Creature> target, CombatDamage &damage) {
 	const Position &targetPos = target->getPosition();
+
+	Monster* monster = attacker ? attacker->getMonster() : nullptr;
+	if (monster && monster->getLevel() > 0) {
+		float bonusDmg = g_config.getFloat(ConfigManager::MLVL_BONUSDMG) * monster->getLevel();
+		if (bonusDmg != 0.0) {
+			if (damage.primary.value < 0) {
+				damage.primary.value += std::round(damage.primary.value * bonusDmg);
+			}
+			if (damage.secondary.value < 0) {
+				damage.secondary.value += std::round(damage.secondary.value * bonusDmg);
+			}
+		}
+	}
+
 	auto manaChange = damage.primary.value + damage.secondary.value;
 	if (manaChange > 0) {
 		std::shared_ptr<Player> attackerPlayer;
@@ -7595,6 +7620,7 @@ bool Game::combatChangeMana(std::shared_ptr<Creature> attacker, std::shared_ptr<
 		} else {
 			attackerPlayer = nullptr;
 		}
+		
 
 		auto targetPlayer = target->getPlayer();
 		if (attackerPlayer && targetPlayer && attackerPlayer->getSkull() == SKULL_BLACK && attackerPlayer->getSkullClient(targetPlayer) == SKULL_NONE) {

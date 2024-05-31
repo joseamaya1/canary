@@ -45,6 +45,17 @@ Monster::Monster(const std::shared_ptr<MonsterType> mType) :
 	internalLight = mType->info.light;
 	hiddenHealth = mType->info.hiddenHealth;
 	targetDistance = mType->info.targetDistance;
+	if (level > 0) {
+		float bonusHp = g_config.getFloat(ConfigManager::MLVL_BONUSHP) * level;
+		if (bonusHp != 0.0) {
+			healthMax += healthMax * bonusHp;
+			health += health * bonusHp;
+		}
+		float bonusSpeed = g_config.getFloat(ConfigManager::MLVL_BONUSSPEED) * level;
+		if (bonusSpeed != 0.0) {
+			baseSpeed += baseSpeed * bonusSpeed;
+		}
+	}
 
 	// Register creature events
 	for (const std::string &scriptName : mType->info.scripts) {
