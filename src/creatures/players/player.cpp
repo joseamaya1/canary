@@ -2370,7 +2370,7 @@ void Player::addExperience(std::shared_ptr<Creature> target, uint64_t exp, bool 
 	//	return;
 	//}
 
-	const Monster* monster = source->getMonster();
+	std::shared_ptr<const Monster> monster = target->getMonster();
 	if (monster && monster->getLevel() > 0) {
 		exp += (exp * 0.08) * monster->getLevel();
 	}
@@ -2391,7 +2391,7 @@ void Player::addExperience(std::shared_ptr<Creature> target, uint64_t exp, bool 
 	}
 
 	// Hazard system experience
-	std::shared_ptr<Monster> monster = target && target->getMonster() ? target->getMonster() : nullptr;
+	std::shared_ptr<const Monster> monster = target && target->getMonster() ? target->getMonster() : nullptr;
 	bool handleHazardExperience = monster && monster->getHazard() && getHazardSystemPoints() > 0;
 	if (handleHazardExperience) {
 		exp += (exp * (1.75 * getHazardSystemPoints() * g_configManager().getFloat(HAZARD_EXP_BONUS_MULTIPLIER, __FUNCTION__))) / 100.;

@@ -7027,9 +7027,9 @@ bool Game::combatChangeHealth(std::shared_ptr<Creature> attacker, std::shared_pt
 		// Wheel of destiny apply combat effects
 		applyWheelOfDestinyEffectsToDamage(damage, attackerPlayer, target);
 
-		Monster* monster = attacker ? attacker->getMonster() : nullptr;
+		std::shared_ptr<const Monster> monster = attacker ? attacker->getMonster() : nullptr;
 		if (monster && monster->getLevel() > 0) {
-			float bonusDmg = g_config.getFloat(ConfigManager::MLVL_BONUSDMG) * monster->getLevel();
+			float bonusDmg = g_configManager().getFloat(MLVL_BONUSDMG, __FUNCTION__) * monster->getLevel();
 			if (bonusDmg != 0.0) {
 				damage.primary.value += std::round(damage.primary.value * bonusDmg);
 				damage.secondary.value += std::round(damage.secondary.value * bonusDmg);
@@ -7599,9 +7599,9 @@ int32_t Game::calculateLeechAmount(const int32_t &realDamage, const uint16_t &sk
 bool Game::combatChangeMana(std::shared_ptr<Creature> attacker, std::shared_ptr<Creature> target, CombatDamage &damage) {
 	const Position &targetPos = target->getPosition();
 
-	Monster* monster = attacker ? attacker->getMonster() : nullptr;
+	std::shared_ptr <Monster> monster = attacker ? attacker->getMonster() : nullptr;
 	if (monster && monster->getLevel() > 0) {
-		float bonusDmg = g_config.getFloat(ConfigManager::MLVL_BONUSDMG) * monster->getLevel();
+		float bonusDmg = g_configManager().getFloat(MLVL_BONUSDMG, __FUNCTION__) * monster->getLevel();
 		if (bonusDmg != 0.0) {
 			if (damage.primary.value < 0) {
 				damage.primary.value += std::round(damage.primary.value * bonusDmg);

@@ -442,16 +442,6 @@ float ConfigManager::loadFloatConfig(lua_State* L, const ConfigKey_t &key, const
 	return value;
 }
 
-float ConfigManager::getFloat(floating_config_t what) const
-{
-	if (what >= LAST_FLOATING_CONFIG) {
-		std::cout << "[Warning - ConfigManager::getFloat] Accessing invalid index: " << what << std::endl;
-		return 0.0f;
-	}
-	return floating[what];
-}
-
-
 const std::string &ConfigManager::getString(const ConfigKey_t &key, std::string_view context) const {
 	static const std::string dummyStr;
 	if (configs.contains(key) && std::holds_alternative<std::string>(configs.at(key))) {

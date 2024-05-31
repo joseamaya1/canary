@@ -45,8 +45,6 @@ private:
 	int32_t loadIntConfig(lua_State* L, const ConfigKey_t &key, const char* identifier, const int32_t &defaultValue);
 	bool loadBoolConfig(lua_State* L, const ConfigKey_t &key, const char* identifier, const bool &defaultValue);
 	float loadFloatConfig(lua_State* L, const ConfigKey_t &key, const char* identifier, const float &defaultValue);
-	float getFloat(floating_config_t what) const;
-	float floating[LAST_FLOATING_CONFIG] = {};
 
 	std::string configFileLua = { "config.lua" };
 	bool loaded = false;
