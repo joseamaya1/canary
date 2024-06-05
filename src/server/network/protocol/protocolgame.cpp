@@ -7443,7 +7443,12 @@ void ProtocolGame::AddCreature(NetworkMessage &msg, std::shared_ptr<Creature> cr
 		if (!oldProtocol && creature->isHealthHidden()) {
 			msg.addString("", "ProtocolGame::AddCreature - empty");
 		} else {
-			msg.addString(creature->getName(), "ProtocolGame::AddCreature - creature->getName()");
+			std::shared_ptr<const Monster>  monster = creature->getMonster();
+			if (monster && monster->getLevel() > 0) {
+				msg.addString(creature->getName() + " [" + std::to_string(monster->getLevel()) + "]", "ProtocolGame::AddCreature - creature->getName() + monster->getLevel()");
+			} else {
+				msg.addString(creature->getName(), "ProtocolGame::AddCreature - creature->getName()");
+			}
 		}
 	}
 

@@ -17,11 +17,13 @@
 #include "lua/callbacks/event_callback.hpp"
 #include "lua/callbacks/events_callbacks.hpp"
 #include "map/spectators.hpp"
+#include "config/configmanager.hpp"
 
 int32_t Monster::despawnRange;
 int32_t Monster::despawnRadius;
 
 uint32_t Monster::monsterAutoID = 0x50000001;
+extern ConfigManager g_config;
 
 std::shared_ptr<Monster> Monster::createMonster(const std::string &name) {
 	const auto mType = g_monsters().getMonsterType(name);
@@ -38,6 +40,7 @@ Monster::Monster(const std::shared_ptr<MonsterType> mType) :
 	defaultOutfit = mType->info.outfit;
 	currentOutfit = mType->info.outfit;
 	skull = mType->info.skull;
+	level = uniform_random(mType->info.minLevel, mType->info.maxLevel);
 	health = mType->info.health * mType->getHealthMultiplier();
 	healthMax = mType->info.healthMax * mType->getHealthMultiplier();
 	runAwayHealth = mType->info.runAwayHealth * mType->getHealthMultiplier();
