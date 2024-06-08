@@ -40,7 +40,19 @@ Monster::Monster(const std::shared_ptr<MonsterType> mType) :
 	defaultOutfit = mType->info.outfit;
 	currentOutfit = mType->info.outfit;
 	skull = mType->info.skull;
-	level = uniform_random(mType->info.minLevel, mType->info.maxLevel);
+	level = uniform_random(1, 15);
+
+	// Elite Monsters skull by LEVEL:
+    if (level >= 1 && level <= 5) {
+        skull = SKULL_WHITE;
+    }
+    else if (level >= 6 && level <= 10) {
+        skull = SKULL_YELLOW;
+    }
+    else if (level >= 11) {
+        skull = SKULL_RED;
+    }
+
 	health = mType->info.health * mType->getHealthMultiplier();
 	healthMax = mType->info.healthMax * mType->getHealthMultiplier();
 	runAwayHealth = mType->info.runAwayHealth * mType->getHealthMultiplier();

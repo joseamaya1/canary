@@ -3339,7 +3339,7 @@ void ProtocolGame::sendCreatureSkull(std::shared_ptr<Creature> creature) {
 	NetworkMessage msg;
 	msg.addByte(0x90);
 	msg.add<uint32_t>(creature->getID());
-	msg.addByte(player->getSkullClient(creature));
+	msg.addByte(creature->getSkullClient(creature));
 	writeToOutputBuffer(msg);
 }
 
