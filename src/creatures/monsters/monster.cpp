@@ -40,7 +40,9 @@ Monster::Monster(const std::shared_ptr<MonsterType> mType) :
 	defaultOutfit = mType->info.outfit;
 	currentOutfit = mType->info.outfit;
 	skull = mType->info.skull;
-	level = uniform_random(1, 15);
+	if (Creature::isSummon()){
+		level = uniform_random(1, 15);
+	}
 
 	// Elite Monsters skull by LEVEL:
     if (level >= 1 && level <= 5) {

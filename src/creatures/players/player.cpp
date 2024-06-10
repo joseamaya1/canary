@@ -5130,7 +5130,14 @@ Skulls_t Player::getSkullClient(std::shared_ptr<Creature> creature) {
 		return SKULL_NONE;
 	}
 
+
+
 	std::shared_ptr<Player> player = creature->getPlayer();
+
+	if (!player || creature->getSkull() != SKULL_NONE) {
+		return Creature::getSkullClient(creature);
+	}
+
 	if (player && player->getSkull() == SKULL_NONE) {
 		if (player.get() == this) {
 			for (const auto &kill : unjustifiedKills) {

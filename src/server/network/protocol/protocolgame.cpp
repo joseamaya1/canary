@@ -7482,7 +7482,7 @@ void ProtocolGame::AddCreature(NetworkMessage &msg, std::shared_ptr<Creature> cr
 
 	addCreatureIcon(msg, creature);
 
-	msg.addByte(player->getSkullClient(creature));
+	msg.addByte(creature->getSkullClient(creature));
 	msg.addByte(player->getPartyShield(otherPlayer));
 
 	if (!known) {
